@@ -1,0 +1,3 @@
+get into psql database: docker exec -it encouragement_proj-db-1 psql -h localhost -p 5432 -U postgres -d customer_db
+get docker container running: docker compose up -d
+Start the server from docker-comose.yml directory: python manage.py runserver
