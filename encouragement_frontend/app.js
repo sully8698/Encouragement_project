@@ -1,5 +1,5 @@
 // handles the fetch boilerplate
-const basicFetch = async (url, context) => {
+  const basicFetch = async (url, context) => {
     const response = await fetch(url, context)
     const body = await response.json()
     return body
@@ -12,23 +12,25 @@ const basicFetch = async (url, context) => {
     return [uname, pword]
   }
   
-  const createSentenceHtml = (sentenceObj,h3) => {
-    const sentence = document.createElement("h3")
-    sentence.innerText = sentenceObj
+  const createHtmlElement = (apiObj, tagElement) => { // currently adds to the h3 element on html
+    const h3element = document.createElement("h3")
+    h3element.innerText = apiObj
 
-    for (let elem of [sentence]) {
-        h3.appendChild(elem)
+    for (let elem of [h3element]) {
+        tagElement.appendChild(elem)
     }
 
   }
 
-  const writeEncouragementApiResults = async (body) => {
+  const writeEncouragementApiResults = async (body) => { // currently grabs all sentences in the sentence data base
     const h3 = document.querySelector("#getinfo")
     console.log(body)
     if(body.length > 0) {
-        for(elem of body){
-            createSentenceHtml(elem['fields']['sentence'], h3)
-        }
+        h3.innerText = ""
+        randomint = Math.floor(Math.random() * (body.length))
+        console.log(randomint)
+        createHtmlElement(body[randomint]['fields']['sentence'], h3) //adds h3 elements with the sentence text in it
+        
     } else {
         h3.innerHTML = "you must log in first"
     }
@@ -88,10 +90,12 @@ const basicFetch = async (url, context) => {
   window.onload = () => {
     const form = document.querySelector("#form")
     const getinfo = document.querySelector("#getinfo")
+    const logout = document.querySelector("#logout-btn")
 
     form.onsubmit = (e) => handleAuth(e)
     getinfo.onclick = async () => {
         const body = await fetchResults()
         writeEncouragementApiResults(body)
     }
+    logout.onclick = () => localStorage.removeItem("token")
   }
