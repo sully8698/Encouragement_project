@@ -58,7 +58,7 @@
       },
       body: JSON.stringify(data)
     }
-    basicFetch("http://127.0.0.1:8000/api/v1/encouragement/accounts/signup", context)
+    basicFetch("http://127.0.0.1:8000/encouragement/accounts/signup", context)
   }
 
   // trades a registered user's credentials for a token
@@ -71,7 +71,7 @@
       },
       body: JSON.stringify(data)
     }
-    const body = await basicFetch("http://127.0.0.1:8000/api/v1/encouragement/accounts/get-token", context)
+    const body = await basicFetch("http://127.0.0.1:8000/encouragement/accounts/get-token", context)
     return body["token"]
   }
 
@@ -84,7 +84,7 @@
         "Authorization": `Token ${token}`
       }
     }
-    return basicFetch("http://127.0.0.1:8000/api/v1/encouragement/sentence/", context)
+    return basicFetch("http://127.0.0.1:8000/encouragement/sentence/", context)
   }
   
   window.onload = () => {
