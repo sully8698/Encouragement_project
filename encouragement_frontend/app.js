@@ -9,7 +9,11 @@
   const getCredentials = (e) => {
     const uname = e.target.uname.value
     const pword = e.target.password.value
-    return [uname, pword]
+    const fname = e.target.first_name.value
+    const lname = e.target.last_name.value
+    const email = e.target.email.value
+    const phone_numer = e.target.phone_number.value
+    return [uname, pword, fname, lname, email, phone_numer]
   }
   
   const createHtmlElement = (apiObj, tagElement) => { // currently adds to the h3 element on html
@@ -22,26 +26,25 @@
 
   }
 
-  const writeEncouragementApiResults = async (body) => { // currently grabs all sentences in the sentence data base
-    const h3 = document.querySelector("#getinfo")
+  const writeEncouragementApiResults = async (body) => { 
     console.log(body)
+
     if(body.length > 0) {
-        h3.innerText = ""
+        getinfo.innerText = ""
         randomint = Math.floor(Math.random() * (body.length))
-        console.log(randomint)
-        createHtmlElement(body[randomint]['fields']['sentence'], h3) //adds h3 elements with the sentence text in it
-        
+        createHtmlElement(body[randomint]['fields']['sentence'], getinfo) //adds h3 elements with the sentence text in it
     } else {
-        h3.innerHTML = "you must log in first"
+        getinfo.innerHTML = "you must log in first"
     }
   }
 
   const handleAuth = async (e) => {
     e.preventDefault()
-    const [uname, pword] = getCredentials(e)
+    const [uname, pword, fname, lname, email, phone_numer] = getCredentials(e)
     const checkbox = document.querySelector("#signup")
     if(checkbox.checked) {
-      signUp(uname, pword)
+      signUp(uname, pword, fname, lname, email, phone_numer)
+      
     } else {
         const token = await getToken(uname, pword)
         localStorage.setItem("token", token)
@@ -49,8 +52,14 @@
   }
   
   // makes a POST request to create an account
-  const signUp = (uname, pword) => {
-    const data = {username: uname, password: pword}
+  const signUp = (uname, pword, fname, lname, email, phone_numer) => {
+    const data = {username: uname, 
+      password: pword, 
+      first_name: fname, 
+      last_name: lname, 
+      email: email, 
+      phone_number: phone_numer
+    }
     const context = {
       method: "POST",
       headers: {
