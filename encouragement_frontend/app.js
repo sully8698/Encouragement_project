@@ -12,8 +12,8 @@
     const fname = e.target.first_name.value
     const lname = e.target.last_name.value
     const email = e.target.email.value
-    const phone_numer = e.target.phone_number.value
-    return [uname, pword, fname, lname, email, phone_numer]
+    const phone_number = e.target.phone_number.value
+    return [uname, pword, fname, lname, email, phone_number]
   }
   
   const createHtmlElement = (apiObj, tagElement) => { // currently adds to the h3 element on html
@@ -27,7 +27,7 @@
   }
 
   const writeEncouragementApiResults = async (body) => { 
-    console.log(body)
+    console.log('Encouragement sent')
 
     if(body.length > 0) {
         getinfo.innerText = ""
@@ -40,10 +40,10 @@
 
   const handleAuth = async (e) => {
     e.preventDefault()
-    const [uname, pword, fname, lname, email, phone_numer] = getCredentials(e)
+    const [uname, pword, fname, lname, email, phone_number] = getCredentials(e)
     const checkbox = document.querySelector("#signup")
     if(checkbox.checked) {
-      signUp(uname, pword, fname, lname, email, phone_numer)
+      signUp(uname, pword, fname, lname, email, phone_number)
       
     } else {
         const token = await getToken(uname, pword)
@@ -52,13 +52,13 @@
   }
   
   // makes a POST request to create an account
-  const signUp = (uname, pword, fname, lname, email, phone_numer) => {
+  const signUp = (uname, pword, fname, lname, email, phone_number) => {
     const data = {username: uname, 
       password: pword, 
       first_name: fname, 
       last_name: lname, 
       email: email, 
-      phone_number: phone_numer
+      phone_number: phone_number
     }
     const context = {
       method: "POST",
@@ -67,7 +67,13 @@
       },
       body: JSON.stringify(data)
     }
-    basicFetch("http://127.0.0.1:8000/encouragement/accounts/signup", context)
+
+    try {
+      const response = basicFetch("http://127.0.0.1:8000/encouragement/accounts/signup", context);
+      console.log("SignUp Response: ", response); 
+    } catch (error) {
+      console.error("Error during sign-up:", error);
+    }
   }
 
   // trades a registered user's credentials for a token

@@ -12,6 +12,12 @@ class SignupSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=100)
     phone_number = serializers.CharField(max_length=30)
 
+    def validate_email(self, value):
+        """Ensure the email is not duplicated"""
+        if value and User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("Email is already in use.")
+        return value
+
     def create(self, validated_data):
         # User Object
         user_data = {
@@ -23,10 +29,10 @@ class SignupSerializer(serializers.Serializer):
 
         # Customer Object
         customer_data = {
-            'user': user,  # Link the User to the Customer
+            'username': user,  # Link the User to the Customer
             'first_name': validated_data['first_name'],
             'last_name': validated_data['last_name'],
-            'email': validated_data['email'],
+            'email': validated_data.get('email'),
             'phone_number': validated_data['phone_number'],
         }
         customer = Customer.objects.create(**customer_data)

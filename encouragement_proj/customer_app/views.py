@@ -50,3 +50,8 @@ class SelectCustomer(APIView):
         customer.save()
         customer = json.loads(serialize('json', [customer]))
         return Response(customer)
+    
+    def delete(self, request, id):
+        customer = self.get_customer(id)
+        customer.delete()
+        return Response()

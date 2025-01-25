@@ -5,7 +5,7 @@ from .validators import validate_name
 
 # Create your models here.
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="customer")
+    username = models.OneToOneField(User, on_delete=models.CASCADE, related_name="customer")
     first_name = models.CharField(max_length=100, validators=[validate_name])
     last_name = models.CharField(max_length=100, validators=[validate_name])
     email = models.CharField(max_length=200, unique=True, default=None, validators=[EmailValidator()])
