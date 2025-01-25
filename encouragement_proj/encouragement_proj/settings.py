@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'customer_app',
     'sentence_app',
+    'message_api',
     'rest_framework.authtoken',
 ]
 

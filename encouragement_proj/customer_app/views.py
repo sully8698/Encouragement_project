@@ -43,3 +43,10 @@ class SelectCustomer(APIView):
         customer.save()
         customer = json.loads(serialize('json', [customer]))
         return Response(customer)
+    
+    def post(self, request): # needs to be tested still to see if it works
+        customer = Customer(request.data)
+        customer.full_clean()
+        customer.save()
+        customer = json.loads(serialize('json', [customer]))
+        return Response(customer)

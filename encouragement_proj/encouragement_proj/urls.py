@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('encouragement/customer/', include('customer_app.urls')),
     path('encouragement/sentence/', include('sentence_app.urls')),
-    path('encouragement/accounts/', include("accounts.urls"))
+    path('encouragement/accounts/', include('accounts.urls')),
+    path('encouragement/message/', include('message_api.urls'))
 ]
