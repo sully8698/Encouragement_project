@@ -38,3 +38,8 @@ class SignupSerializer(serializers.Serializer):
         customer = Customer.objects.create(**customer_data)
 
         return customer
+    
+    def delete(self, request, id):
+        customer = self.get_customer(id)
+        customer.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -11,41 +11,73 @@ body, h1, h2, h3, h4, h5, h6, p, label, input, form {
   }
   
   body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Soft, warm gradient */
+    color: #333;
+    padding: 20px;
   }
+  
   
   /* Style the header */
   h1 {
+    font-size: 36px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Soft shadow for text */
+    margin-bottom: 30px;
     text-align: center;
-    margin-bottom: 20px;
+    font-weight: 600;
   }
   
   /* Style the form container */
   #form {
-    border: 1px solid #ccc;
-    padding: 20px;
+    border: 1px solid #ddd;
+    padding: 30px;
+    margin: 10px;
     background-color: #fff;
-    max-width: 300px;
-  }
-  
-  
-  
-  #form input[type="text"],
-  #form input[type="password"],
-  #form input[type="submit"] {
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    max-width: 350px;
     width: 100%;
-    padding: 8px; /* Adjusted padding for textboxes and submit button */
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box; /* Ensures the total width includes padding and border */
+    text-align: center;
+    transition: transform 0.2s ease-in-out; /* Subtle hover effect */
   }
+  
+  #form:hover {
+    transform: scale(1.03); /* Slightly enlarges the form on hover */
+  }
+  
+  
+  
+#form input[type="text"],
+#form input[type="password"],
+#form input[type="email"],
+#form input[type="submit"] {
+  background-color: #ff6f61; /* Encouraging, friendly color */
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+#form input[type="submit"]:hover {
+  background-color: #ff4f40; /* Darken on hover for interaction */
+}
+
+#form input[type="text"]:focus,
+#form input[type="password"]:focus,
+#form input[type="email"]:focus {
+  border-color: #ff6f61; /* Highlight border on focus */
+  box-shadow: 0 0 8px rgba(255, 111, 97, 0.6); /* Subtle glow effect */
+}
   
   #form input[type="checkbox"] {
     margin-right: 5px;
@@ -62,18 +94,62 @@ body, h1, h2, h3, h4, h5, h6, p, label, input, form {
   
   /* Style the logout button */
   #logout-btn {
-    width: 20%;
-    padding: 8px; /* Adjusted padding for the logout button */
+    width: 150px;
+    padding: 8px; 
     margin-top: 10px;
-    background-color: #dc3545;
+    background-color: darkred;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #logout-btn:hover {
+    background-color: #ff4f40; /* Darken on hover */
+  }
+
+  /* Style the delete user button */
+  #delete-btn {
+    width: 100px;
+    padding: 8px; 
+    margin-top: 20px;
+    background-color: darkred;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #delete-btn:hover {
+    background-color: #ff4f40; /* Darken on hover */
   }
   
   /* Center the Get Info header */
   #getinfo {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    color: #030100; /* Warm color */
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  #getinfo:hover {
+    color: #943b00; /* Darken on hover for interaction */
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  body {
+    animation: fadeIn 1s ease-out;
   }
