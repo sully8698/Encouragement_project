@@ -94,8 +94,8 @@ body, h1, h2, h3, h4, h5, h6, p, label, input, form {
   
   /* Style the logout button */
   #logout-btn {
-    width: 20%;
-    padding: 8px; /* Adjusted padding for the logout button */
+    width: 150px;
+    padding: 8px; 
     margin-top: 10px;
     background-color: darkred;
     color: #fff;
@@ -106,6 +106,23 @@ body, h1, h2, h3, h4, h5, h6, p, label, input, form {
   }
 
   #logout-btn:hover {
+    background-color: #ff4f40; /* Darken on hover */
+  }
+
+  /* Style the delete user button */
+  #delete-btn {
+    width: 100px;
+    padding: 8px; 
+    margin-top: 20px;
+    background-color: darkred;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #delete-btn:hover {
     background-color: #ff4f40; /* Darken on hover */
   }
   

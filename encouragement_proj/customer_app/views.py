@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView, Response
+from rest_framework import status
 from .models import Customer
 from django.core.serializers import serialize
 import json
@@ -54,4 +55,4 @@ class SelectCustomer(APIView):
     def delete(self, request, id):
         customer = self.get_customer(id)
         customer.delete()
-        return Response()
+        return Response(status=status.HTTP_204_NO_CONTENT)

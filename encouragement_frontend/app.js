@@ -27,7 +27,7 @@
   }
 
   const writeEncouragementApiResults = async (body) => { 
-    console.log('Encouragement sent')
+    console.log('Encouragement start')
 
     if(body.length > 0) {
         getinfo.innerText = ""
@@ -35,6 +35,31 @@
         createHtmlElement(body[randomint]['fields']['sentence'], getinfo) //adds h3 elements with the sentence text in it
     } else {
         getinfo.innerHTML = "you must log in first"
+    }
+  }
+
+  const deleteUser = async () => {
+    const token = localStorage.getItem("token");  // Get the stored token
+  
+    if (!token) {
+      console.error("No authentication token found.");
+      return;
+    }
+  
+    const response = await fetch("http://127.0.0.1:8000/encouragement/accounts/delete", {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Token ${token}`,  // token for authorization
+        "Content-Type": "application/json",
+      }
+    });
+  
+    if (response.status === 204) {
+      console.log("User successfully deleted");
+      localStorage.removeItem("token");  // Remove the token from localStorage
+    } else {
+      const error = await response.json();
+      console.error("Failed to delete user:", error);
     }
   }
 
@@ -106,11 +131,21 @@
     const form = document.querySelector("#form")
     const getinfo = document.querySelector("#getinfo")
     const logout = document.querySelector("#logout-btn")
+    const delete_user = document.querySelector('#delete-btn')
 
     form.onsubmit = (e) => handleAuth(e)
+    
     getinfo.onclick = async () => {
         const body = await fetchResults()
         writeEncouragementApiResults(body)
     }
+    
     logout.onclick = () => localStorage.removeItem("token")
+    
+    delete_user.onclick = async () => {
+      const body = await fetchResults()
+      deleteUser(body)
+      
+    }
+
   }
