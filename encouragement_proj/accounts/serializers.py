@@ -7,15 +7,29 @@ from customer_app.models import Customer
 class SignupSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=255)
     password = serializers.CharField(write_only=True)
-    email = serializers.EmailField(required=False)
-    first_name = serializers.CharField(max_length=100)
-    last_name = serializers.CharField(max_length=100)
-    phone_number = serializers.CharField(max_length=30)
+    email = serializers.EmailField(required=True)
+    first_name = serializers.CharField(max_length=100, required=True)
+    last_name = serializers.CharField(max_length=100, required=True)
+    phone_number = serializers.CharField(max_length=30,required=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.context.get('request') and self.context['request'].method in ['put', 'patch']:
+            for field in self.fields.values():
+                field.required = False
 
     def validate_email(self, value):
-        """Ensure the email is not duplicated"""
-        if value and User.objects.filter(email=value).exists():
+    
+        user = self.context.get('request').user  # Access the current user
+
+        print("User Email: ", user.email)
+        print("requested change: ", value)
+
+        # Check if it's an update and if the email is the same as the current user's email
+        if user and value != user.email and User.objects.filter(email=value).exists():
             raise serializers.ValidationError("Email is already in use.")
+
         return value
 
     def create(self, validated_data):
@@ -43,3 +57,18 @@ class SignupSerializer(serializers.Serializer):
         customer = self.get_customer(id)
         customer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+        
+        new_email = validated_data.get('email', instance.email)
+        if new_email != instance.email:  # Only update email if it's changed
+            instance.change_email(new_email)
+        
+        if validated_data.get('password'):
+            instance.username.set_password(validated_data['password'])  # Update password properly
+        
+        instance.save()
+        return instance

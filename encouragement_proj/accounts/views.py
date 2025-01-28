@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, DestroyAPIView
+from rest_framework.generics import CreateAPIView, DestroyAPIView, UpdateAPIView
 from rest_framework.views import APIView, Response
 from django.contrib.auth.models import User
 from .serializers import SignupSerializer
@@ -36,3 +36,29 @@ class DeleteUserView(DestroyAPIView):
             return Response({"message": "User removed successfully"}, status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class UpdateUserView(UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = SignupSerializer
+
+    def get_object(self):
+        return self.request.user.customer
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        return instance
+
+    def put(self, request, *args, **kwargs): # works but requires username and password in request header
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, context={'request': request})
+        
+        if serializer.is_valid():
+                self.perform_update(serializer)
+                return Response(serializer.data)
+
+        return Response({'error': 'Invalid data', 'details': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+            
+            
+    
+    def patch(self, request, *args, **kwargs): # Patch request seems to work fine
+        return self.partial_update(request, *args, **kwargs)
