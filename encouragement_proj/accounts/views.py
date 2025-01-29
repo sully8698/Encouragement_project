@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, DestroyAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, DestroyAPIView, UpdateAPIView, RetrieveAPIView
 from rest_framework.views import APIView, Response
 from django.contrib.auth.models import User
 from .serializers import SignupSerializer
@@ -7,6 +7,20 @@ from rest_framework import status
 
 
 # Create your views here.
+
+class GetUserView(RetrieveAPIView):
+    permission_classes = [IsAuthenticated] 
+    serializer_class = SignupSerializer
+
+    def get(self, request, *args, **kwargs):
+        try:
+            instance = self.request.user.customer
+            serializer = self.get_serializer(instance)
+            print(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class SignupView(CreateAPIView):
     serializer_class = SignupSerializer
@@ -53,12 +67,23 @@ class UpdateUserView(UpdateAPIView):
         serializer = self.get_serializer(instance, data=request.data, context={'request': request})
         
         if serializer.is_valid():
-                self.perform_update(serializer)
-                return Response(serializer.data)
+                updated_instance = serializer.save()
+                return Response({"message": f'User: {updated_instance.username} updated successfully'}, status=status.HTTP_200_OK)
 
         return Response({'error': 'Invalid data', 'details': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
             
             
     
-    def patch(self, request, *args, **kwargs): # Patch request seems to work fine
-        return self.partial_update(request, *args, **kwargs)
+    def patch(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            serializer = self.get_serializer(instance, data=request.data, partial=True, context={'request': request})
+
+            if serializer.is_valid():
+                updated_instance = serializer.save()
+                return Response({"message": f'User: {updated_instance.username} updated successfully'}, status=status.HTTP_200_OK)
+            
+            return Response({"error": "Invalid data", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

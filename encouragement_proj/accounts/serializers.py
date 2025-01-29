@@ -20,15 +20,16 @@ class SignupSerializer(serializers.Serializer):
                 field.required = False
 
     def validate_email(self, value):
-    
+        print('running validate_email')
         user = self.context.get('request').user  # Access the current user
 
-        print("User Email: ", user.email)
-        print("requested change: ", value)
+        if user.is_authenticated:
+            print("User Email: ", user.email)
+            print("requested change: ", value)
 
-        # Check if it's an update and if the email is the same as the current user's email
-        if user and value != user.email and User.objects.filter(email=value).exists():
-            raise serializers.ValidationError("Email is already in use.")
+            # Check if it's an update and if the email is the same as the current user's email
+            if user and value != user.email and User.objects.filter(email=value).exists():
+                raise serializers.ValidationError("Email is already in use.")
 
         return value
 
@@ -46,7 +47,7 @@ class SignupSerializer(serializers.Serializer):
             'username': user,  # Link the User to the Customer
             'first_name': validated_data['first_name'],
             'last_name': validated_data['last_name'],
-            'email': validated_data.get('email'),
+            'email': validated_data['email'],
             'phone_number': validated_data['phone_number'],
         }
         customer = Customer.objects.create(**customer_data)
