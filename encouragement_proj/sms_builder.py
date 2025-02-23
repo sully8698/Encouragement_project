@@ -4,6 +4,8 @@ from django.db import connection # qurries the database from the script
 import random
 from dotenv import load_dotenv
 import os
+import datetime
+import pytz
 
 load_dotenv()
 
@@ -37,11 +39,12 @@ def get_random_encouragement():
 
 # a script to to check the data base for customers send messages when certain criteria met
 def background_task(): 
-    tasks = 2
+    tasks = 1
     num = 0
     while num < tasks:
         all_customers = Customer.objects.all()
-        
+        current_time = datetime.datetime.now(pytz.utc)
+        print(current_time)
         # needs logic to check the current time
         # and only send a message if its 0900 else return not ready and current time
         for customer in all_customers: 

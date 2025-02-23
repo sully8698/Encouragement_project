@@ -1,25 +1,38 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import formContext from "../contexts/formContext";
+import tokenContext from "../contexts/tokenContext";
 
 export default function Navbar() {
-    // need use state that removes login or logout button
-    // pending if user is logged in or out
-    // also sign up link should go away if user logged in
 
-   
+    const userToken = useContext(tokenContext)
     
-
     return (
         <>
-          <ul className="navbar">
-            <li>
-              <Link to="/signup">Signup</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          </ul>
+            <ul className="navbar">
+                {userToken.userToken === null ? (
+                    <>
+                        <li>
+                            <Link to={""}>Home Page</Link>
+                        </li>
+                        <li>
+                        <Link to={"/signup"}>Signup</Link>
+                        </li>
+                        <li>
+                        <Link to={"/login"}>Login</Link>
+                        </li>
+                    </>
+                ) : (
+                    <>  
+                        <li>
+                            <Link to={"/home"}>Home Page</Link>
+                        </li>
+                        <li>
+                            <Link to={"/logout"}>logout</Link>
+                        </li>
+                    </>
+                )
+                }
+            </ul>
         </>
     );
 }

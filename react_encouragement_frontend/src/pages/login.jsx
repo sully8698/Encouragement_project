@@ -16,7 +16,7 @@ export default function Login({handleInputChange, formData, handleToken}){
         const token = await login(context)
         
         if(!token) {
-            setResponseMsg("Error logging in")
+            setResponseMsg("Error logging in, improper username or password")
           } else {
             handleToken(token)
             setShouldRedirect(true)
@@ -24,7 +24,7 @@ export default function Login({handleInputChange, formData, handleToken}){
     }
     
     if (shouldRedirect) {
-        return <Navigate to=""/>
+        return <Navigate to="/home"/>
     } else {
         return <LoginForm formType={"Login"} handleInputChange={handleInputChange} formData={formData} handleToken={handleToken} handleSubmit={handleSubmit} responseMsg={responseMsg}/>
     }
