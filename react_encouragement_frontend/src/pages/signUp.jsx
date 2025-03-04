@@ -35,10 +35,8 @@ export default function SignUp({handleInputChange, formData}) {
     }
   
     if (shouldRedirect) {
-        console.log("signed UP YO")
         return <Navigate to="/login"/>
     } else {
-        console.log("bro, not signed up!")
         return <SignupForm formType={"Signup"} handleInputChange={handleInputChange} formData={formData} handleSubmit={handleSubmit} responseMsg={responseMsg}/>
     }
   

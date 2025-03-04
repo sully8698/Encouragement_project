@@ -38,25 +38,25 @@ def get_random_encouragement():
     return random_sentence.sentence
 
 # a script to to check the data base for customers send messages when certain criteria met
-def background_task(): 
-    tasks = 1
-    num = 0
-    while num < tasks:
-        all_customers = Customer.objects.all()
-        current_time = datetime.datetime.now(pytz.utc)
-        print(current_time)
-        # needs logic to check the current time
-        # and only send a message if its 0900 else return not ready and current time
-        for customer in all_customers: 
-            sentence = get_random_encouragement()
-            print(f'Customer: {customer.first_name}, Phone: {customer.phone_number}, Sentence: {sentence}')
+# def background_task(): 
+#     tasks = 1
+#     num = 0
+#     while num < tasks:
+#         all_customers = Customer.objects.all()
+#         current_time = datetime.datetime.now(pytz.utc)
+#         print(current_time)
+#         # needs logic to check the current time
+#         # and only send a message if its 0900 else return not ready and current time
+#         for customer in all_customers: 
+#             sentence = get_random_encouragement()
+#             print(f'Customer: {customer.first_name}, Phone: {customer.phone_number}, Sentence: {sentence}')
 
-            build_message(trilio_test_num, sentence, customer.phone_number)
+#             build_message(trilio_test_num, sentence, customer.phone_number)
 
-        num += 1
-        time.sleep(5)
+#         num += 1
+#         time.sleep(5)
 
-background_task()
+# background_task()
 
 
 

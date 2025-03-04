@@ -1,6 +1,8 @@
 import { useContext, useState } from "react"
 import tokenContext from "../contexts/tokenContext"
 import { Navigate } from "react-router-dom"
+import Landing from "../pages/landing"
+import Home from "../pages/home"
 
 
 export default function Logout(){
@@ -21,7 +23,9 @@ export default function Logout(){
     if (shouldRedirect === false){
         return <Navigate to={"/home"} />
     } else if (shouldRedirect === true){
-        return <Navigate to={""} />
+        localStorage.removeItem("Token")
+        console.log(userToken)
+        return <Navigate to={"/"} />
     }
 
     return (

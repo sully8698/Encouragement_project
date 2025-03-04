@@ -40,12 +40,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'customer_app',
     'sentence_app',
-    'message_api',
     'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
-    'encouragement_proj.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,6 +53,24 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+]
+
+CORS_ALLOW_HEADERS = [
+    'authorization',
+    'content-type',
+    'accept',
+    'x-csrftoken',
 ]
 
 ROOT_URLCONF = 'encouragement_proj.urls'
@@ -139,4 +157,20 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ]
+}
+
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://redis:6379/0'  # Redis as the broker (make sure Redis is running)
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'redis://encouragement_proj-redis-1:6379/0'
+CELERY_TIMEZONE = 'UTC'
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'send-sms-every-day-at-9am': {
+        'task': 'customer_app.tasks.send_sms_to_customers',
+        'schedule': crontab(hour=9, minute=0),  # Every day at 9 AM UTC
+    },
 }

@@ -16,7 +16,6 @@ class GetUserView(RetrieveAPIView):
         try:
             instance = self.request.user.customer
             serializer = self.get_serializer(instance)
-            print(serializer.data)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -47,7 +46,7 @@ class DeleteUserView(DestroyAPIView):
         try:
             instance = self.get_object() # get the specific logged in user
             self.perform_destroy(instance)  # Call delete logic
-            return Response({"message": "User removed successfully"}, status=status.HTTP_204_NO_CONTENT)
+            return Response({"message": "User removed successfully"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
