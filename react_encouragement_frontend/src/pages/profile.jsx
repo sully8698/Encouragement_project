@@ -50,7 +50,6 @@ export default function Profile() {
     }
 
     const handleUpdate = async (e) => {
-        console.log(data)
             e.preventDefault()
             const context = { 
                 password: data.password,
@@ -59,7 +58,6 @@ export default function Profile() {
                 email: data.email,
                 phone_number: data.phone_number
             }
-            console.log(context)
             
             await updateUser(userToken, context)
             const getData = await getUserInfo(userToken)
@@ -90,7 +88,7 @@ export default function Profile() {
                 {showForm ? (
                     <>
                         <form onSubmit={handleUpdate}>
-                            <button type="submit">Update Profile</button>
+                            <button type="submit">Save</button>
                             {/* <div className="form-group">
                                 <label htmlFor="password">Password</label>
                                 <input
@@ -141,7 +139,6 @@ export default function Profile() {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            
                         </form>        
                     </>
                 ) : (   

@@ -24,7 +24,7 @@ export default function Logout(){
         return <Navigate to={"/home"} />
     } else if (shouldRedirect === true){
         localStorage.removeItem("Token")
-        console.log(userToken)
+        
         return <Navigate to={"/"} />
     }
 
