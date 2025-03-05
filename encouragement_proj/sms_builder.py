@@ -4,6 +4,8 @@ from django.db import connection # qurries the database from the script
 import random
 from dotenv import load_dotenv
 import os
+import requests
+import certifi
 
 load_dotenv()
 
@@ -30,30 +32,32 @@ def build_message(from_num, message, to_num):
     
     return print(message.sid)
 
-def get_random_encouragement():
+def qoutable_api_sentence():
+    url = "https://zenquotes.io/api/random/"
+    response = requests.get(url)
+    data = response.json()
+    if response.status_code==200 and data[0]['a'] != "zenquotes.io":
+        data = response.json()
+        sentence = f'{data[0]['a']}: "{data[0]['q']}"'
+        return sentence
+    else:
+        return False
+
+def database_sentence():
     all_sentences = Sentence.objects.all()
     random_sentence = random.choice(all_sentences)
     return random_sentence.sentence
 
-# a script to to check the data base for customers send messages when certain criteria met
-def background_task(): 
-    tasks = 2
-    num = 0
-    while num < tasks:
-        all_customers = Customer.objects.all()
-        
-        # needs logic to check the current time
-        # and only send a message if its 0900 else return not ready and current time
-        for customer in all_customers: 
-            sentence = get_random_encouragement()
-            print(f'Customer: {customer.first_name}, Phone: {customer.phone_number}, Sentence: {sentence}')
+def get_random_encouragement():
+    sentence_db = database_sentence()
+    api_sentence = qoutable_api_sentence()
+    if api_sentence != False:
+        sentence = random.choice([sentence_db, api_sentence])
+        return sentence
+    else:
+        return sentence_db
 
-            build_message(trilio_test_num, sentence, customer.phone_number)
 
-        num += 1
-        time.sleep(5)
-
-background_task()
 
 
 
