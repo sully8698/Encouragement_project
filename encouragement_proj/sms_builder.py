@@ -20,8 +20,12 @@ from sentence_app.models import Sentence
 trilio_test_num = '+18445485076'
 
 def build_message(from_num, message, to_num):
-    account_sid = os.environ['ACCOUNT_SID']
-    auth_token = os.environ['AUTH_TOKEN']
+    account_sid = os.getenv('ACCOUNT_SID')
+    auth_token = os.getenv('AUTH_TOKEN')
+
+    if not account_sid or not auth_token:
+        raise ValueError("Twilio credentials are missing from the environment variables.")
+
     client = Client(account_sid, auth_token)
     
     message = client.messages.create(
@@ -38,7 +42,7 @@ def qoutable_api_sentence():
     data = response.json()
     if response.status_code==200 and data[0]['a'] != "zenquotes.io":
         data = response.json()
-        sentence = f'{data[0]['a']}: "{data[0]['q']}"'
+        sentence = f'{data[0]["a"]} said {data[0]["q"]}'
         return sentence
     else:
         return False

@@ -169,8 +169,8 @@ CELERY_TIMEZONE = 'UTC'
 from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
-    'send-sms-every-day-at-9am': {
+    'check-sms-user-message_hour-every-hour': {
         'task': 'customer_app.tasks.send_sms_to_customers',
-        'schedule': crontab(hour=9, minute=0),  # Every day at 9 AM UTC
+        'schedule': crontab(minute=0),  # Every hour
     },
 }

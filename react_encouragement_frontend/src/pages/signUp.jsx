@@ -22,7 +22,9 @@ export default function SignUp({handleInputChange, formData}) {
         first_name: formData.first_name,
         last_name: formData.last_name,
         email: formData.email,
-        phone_number: formData.phone_number
+        phone_number: formData.phone_number,
+        message_hour: formData.message_hour,
+        timezone: formData.timezone
         }
 
       const response = await signup(context)

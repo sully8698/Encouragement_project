@@ -40,6 +40,9 @@ class SelectCustomer(APIView):
         if 'phone_number' in request.data:
             customer.change_phone_number(request.data['phone_number'])
         
+        if 'message_hour' in request.data:
+            customer.change_message_hour(request.data['message_hour'])
+        
         customer.full_clean()
         customer.save()
         customer = json.loads(serialize('json', [customer]))

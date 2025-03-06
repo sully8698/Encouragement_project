@@ -61,7 +61,7 @@ class UpdateUserView(UpdateAPIView):
         instance = serializer.save()
         return instance
 
-    def put(self, request, *args, **kwargs): # works but requires username and password in request header
+    def put(self, request, *args, **kwargs): # works but requires all keys in request header
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, context={'request': request})
         

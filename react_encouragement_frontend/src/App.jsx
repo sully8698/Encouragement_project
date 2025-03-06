@@ -20,7 +20,9 @@ function App() {
                                     first_name: '',
                                     last_name: '',
                                     email: '',
-                                    phone_number: '' 
+                                    phone_number: '',
+                                    message_hour: '',
+                                    timezone: ''
   });
   const [userToken, setUserToken] = useState(() => localStorage.getItem('Token') || '')
 
