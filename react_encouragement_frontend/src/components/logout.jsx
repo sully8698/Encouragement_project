@@ -1,8 +1,6 @@
 import { useContext, useState } from "react"
 import tokenContext from "../contexts/tokenContext"
 import { Navigate } from "react-router-dom"
-import Landing from "../pages/landing"
-import Home from "../pages/home"
 
 
 export default function Logout(){
@@ -31,8 +29,10 @@ export default function Logout(){
     return (
         <>
             <p>Are you sure you wish to logout?</p>
-            <button onClick={handleCancel}>Cancel</button>
-            <button onClick={handleLogout} >Confirm</button>
+            <div>
+                <button onClick={handleCancel}>Cancel</button>
+                <button onClick={handleLogout} >Confirm</button>
+            </div>
         
         </>
     )

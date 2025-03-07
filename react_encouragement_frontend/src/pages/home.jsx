@@ -9,6 +9,7 @@ export default function Home() {
                 By signing up you have started a service of encouragment, 
                 a way forward to positivity that everyone needs in life.
             </div>
+            <div>Mental Health resources to come soon</div>
             {/* Stretch goals:
                 1) links to endpoints that are to mental health
                 2) links to calming apps

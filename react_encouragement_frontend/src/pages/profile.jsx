@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useState, useContext, useEffect } from "react"
 import tokenContext from "../contexts/tokenContext"
 
+import '../styles/profile.css'
 
 export default function Profile() {
     
@@ -91,7 +92,6 @@ export default function Profile() {
         {data ? (
             <>
                 <h2>Current Info</h2>
-                <button onClick={() => handleDelete()}>Delete Profile</button>
                 <div className="profile-info">
                     <h3>Name: {data.first_name} {data.last_name}</h3>
                     <h3>Phone Number: {data.phone_number}</h3>
@@ -209,8 +209,11 @@ export default function Profile() {
                             </div>
                         </form>        
                     </>
-                ) : (   
-                    <button type="button" onClick={() => setShowForm(true)}>Update Profile</button> 
+                ) : (
+                    <>
+                        <button onClick={() => handleDelete()} style={{backgroundColor:"Red"}}>Delete Profile</button>
+                        <button type="button" onClick={() => setShowForm(true)}>Update Profile</button> 
+                    </>
                 )}
             </>
         ) : (

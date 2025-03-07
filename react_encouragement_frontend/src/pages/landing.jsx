@@ -1,3 +1,5 @@
+import '../styles/landingPage.css'
+
 export default function Landing() {
     return (
         <div className="home-page-paragraph">

@@ -1,10 +1,7 @@
 
 
 export default function SignupForm({formType, handleInputChange, formData, handleSubmit, responseMsg}){
-    // need some code to handle all input fields if signup
-    // or only password and username if login (meaning all account info in database)
     
-
     return (
         <>
             {responseMsg && <h2>{responseMsg}</h2>}
@@ -106,13 +103,6 @@ export default function SignupForm({formType, handleInputChange, formData, handl
                                     <option value="23">11:00 PM</option>
                                     <option value="0">12:00 PM</option>
                                 </select>
-                                {/* <input
-                                    type="text"
-                                    name="message_hour"
-                                    id="message_hour"
-                                    value={data.message_hour}
-                                    onChange={handleInputChange}
-                                /> */}
                             </div>
                     <div className="form-group">
                         <label htmlFor="timezone">timezone: </label>
@@ -134,7 +124,7 @@ export default function SignupForm({formType, handleInputChange, formData, handl
                     </div>
                     <p>
                         By clicking "{formType}" you agree to receive SMS messages. Message frequency may vary.
-                        Standard message and data rates may apply. To opt out, input Username and Password and click the "Remove User" below.
+                        Standard message and data rates may apply. To opt out simply login, go to profile, and click the "Delete Profile" button.
                     </p>
                     <button type="submit">{formType}</button>
                 </form>

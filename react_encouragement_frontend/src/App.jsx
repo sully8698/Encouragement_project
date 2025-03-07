@@ -9,8 +9,11 @@ import tokenContext from './contexts/tokenContext';
 import Landing from './pages/landing';
 import Logout from './components/logout';
 
-import './App.css';
+import './styles/App.css';
 
+import './styles/navbar.css'
+import './styles/signup.css'
+import thumb from './images/thumb.svg'
 
 function App() {
 
@@ -43,9 +46,14 @@ function App() {
   return (
       <>
         <Router>
-          <div className='title'>ENCOURAGMENT</div>
           <tokenContext.Provider value={{userToken, setUserToken}}>
+            <div className="logo">
+                    <img src={thumb} className='thumbImg' alt="Thumbs Up" />
+            </div>
             <Navbar />
+            <div className='title'>
+              <span>ENCOURAGEMENT</span>
+            </div>
             <Routes>
               <Route path='/' element={<Landing />}/>
               <Route path="/home" element={<Home />} />

@@ -1,3 +1,5 @@
+
+
 export default function LoginForm({formType, handleInputChange, formData, handleSubmit, responseMsg}){
 
     return (
