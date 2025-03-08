@@ -4,7 +4,7 @@ from customer_app.models import Customer
 import datetime
 import pytz
 
-trilio_test_num = '+18445485076' #change to verified twillio number when ready
+trilio_num = '+16812588698' 
 
 pacific_tz = pytz.timezone('US/Pacific')
 eastern_tz = pytz.timezone('US/Eastern')
@@ -22,7 +22,7 @@ def send_sms_to_customers():
         current_customer_time = current_time_utc.astimezone(customer_timezone) #put current time into the users selected time zone based on data base
         if current_customer_time.hour == customer.message_hour:
             sentence = get_random_encouragement()
-            build_message(trilio_test_num, sentence, customer.phone_number)
+            build_message(trilio_num, f'ENCOURAGMENT: \n{sentence}', customer.phone_number)
             print(f'Sent message to {customer.first_name} at {customer.phone_number}')
         else:
             print(f'Message scheduled to be sent for {customer.first_name} {customer.last_name} @ {customer.message_hour} O\'Clock')

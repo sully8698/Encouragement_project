@@ -123,10 +123,43 @@ export default function SignupForm({formType, handleInputChange, formData, handl
                         </select>
                     </div>
                     <p>
-                        By clicking "{formType}" you agree to receive SMS messages. Message frequency may vary.
+                        By clicking "{formType}" you agree to the Terms and Conditions below. Also, to receive SMS messages. Message frequency may vary.
                         Standard message and data rates may apply. To opt out simply login, go to profile, and click the "Delete Profile" button.
                     </p>
                     <button type="submit">{formType}</button>
+                    <div>  
+                        <ol>
+                            Terms and Conditions
+                            <li>
+                                Program Overview: The Daily SMS Encouragement Program sends daily text messages to participants to promote positivity and mental health 3. awareness. The content of these messages will focus on motivational messages, personal growth, self-care tips, and general encouragement.
+                            </li>
+                            <li>
+                                Opt-In and Consent: By submitting your phone number through the website, you agree to receive daily SMS messages as part of this program. You acknowledge that message and data rates may apply depending on your mobile carrier.
+                            </li>
+                            <li>
+                                Message Frequency: You will receive one SMS message per day at a time of your choosing during the sign-up process. The content of the messages will be positive and uplifting in nature.
+                            </li>
+                            <li>
+                                Opt-Out: You may stop receiving messages at any time by logging in, going to profile, and clicking the "Delete Profile" button.
+                            </li>
+                            <li>
+                                Privacy and Data Usage: Your phone number and email address will be used solely for the purpose of sending SMS messages as part of this program. We will not share your personal information with third parties without your explicit consent, except as required by law.
+                            </li>
+                            <li>
+                                Eligibility: You must be 18 years or older to participate in this program. By signing up, you confirm that you meet this age requirement.
+                            </li>
+                            <li>
+                                Modification and Termination of the Program: We reserve the right to modify, suspend, or terminate the Daily SMS Encouragement Program at any time without prior notice. In the event of program termination, participants will stop receiving SMS messages.
+                            </li>
+                            <li>
+                                Limitation of Liability: We are not liable for any direct, indirect, incidental, special, or consequential damages arising out of or in connection with your participation in the Daily SMS Encouragement Program, including any issues with message delivery or network problems.
+                            </li>
+                            <li>
+                                Governing Law: These terms and conditions are governed by the laws of United States, and any disputes arising from participation in the program will be resolved in accordance with those laws.
+                            </li>
+                        </ol>
+                            By participating in the SMS Encouragement Program, you agree to these terms and conditions. If you do not agree, please do not sign up for the program.sign up for the program.
+                    </div>
                 </form>
             </div>
         </>

@@ -25,12 +25,6 @@ export default function Profile() {
 
         fetchUserData()
     }, [userToken])
-    
-    
-
-    {/* need logic on this page to select a time, this will need to update the backend with PUT method
-        backened still needs a spot to contain a time in the database per user account
-        backened still needs a PUT method endpoint to change the time stored on user account */}
 
     const handleDelete = async () => {
         const confirmation = window.confirm("Are you sure you want to delete your profile?")

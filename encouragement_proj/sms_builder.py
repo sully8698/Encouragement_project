@@ -42,7 +42,7 @@ def qoutable_api_sentence():
     data = response.json()
     if response.status_code==200 and data[0]['a'] != "zenquotes.io":
         data = response.json()
-        sentence = f'{data[0]["a"]} said {data[0]["q"]}'
+        sentence = f'{data[0]["a"]} said, \"{data[0]["q"]}\"'
         return sentence
     else:
         return False
