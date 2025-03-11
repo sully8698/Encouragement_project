@@ -39,6 +39,7 @@ export async function getUserInfo(token) {
   }
 
   const response = await basicFetch("http://localhost:8000/encouragement/accounts/", payload)
+  console.log(response)
   return response 
 }
 
@@ -72,3 +73,91 @@ export async function deleteUser(token) {
   
 }
 
+export async function changePassword(token, context) { // context = {old_password, new_password1, new_password2}
+  const payload = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Token ${token}`,
+    },
+    body: JSON.stringify(context)
+  }
+
+  try{
+
+    const response = await basicFetch("http://localhost:8000/encouragement/accounts/password_change", payload)
+    
+    if (!response.ok) {
+      throw new Error("Password change failed, please try again.")
+    }
+  
+    const data = await response.json()
+  
+    return data
+  } catch(error) {
+    console.log(error)
+    throw error
+  }
+}
+
+export async function resetPassword(email) {
+  try {
+      const response = await fetch("http://localhost:8000/encouragement/accounts/password_reset", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email })
+      });
+
+      if (!response.ok) {
+          throw new Error("Password reset failed, please try again.");
+      }
+
+      const data = await response.json();
+      return { success: true, data }; // success response
+  } catch (error) {
+      console.error("Password reset error:", error);
+      return { success: false, error: error.message || "Something went wrong!" }; // error response
+  }
+}
+
+export async function resetPasswordConfirm(uidb64, token, password, confirmPassword) {
+  const payload = {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          new_password1: password,
+          new_password2: confirmPassword,
+      }),
+  };
+
+  try {
+      const response = await fetch(`http://localhost:8000/encouragement/accounts/reset/${uidb64}/${token}/`, payload);
+      console.log(response.status, response.headers.get('Location'));
+
+      if (response.ok) {
+          return { success: true }; // On success, return a success flag
+      } else {
+          const data = await response.json();
+          console.log('Error data from server:', data);  // Log the entire error data
+
+          // Process errors object
+          if (data.errors) {
+              // Collect error messages from the 'errors' object
+              const errorMessages = Object.keys(data.errors)
+                  .map((key) => data.errors[key].join(', '))  // Join multiple errors for each field
+                  .join(', ');  // Join errors across fields
+              return { success: false, error: errorMessages };
+          }
+
+          // If no structured errors found, return a generic error
+          return { success: false, error: data.error || 'Something went wrong' };
+      }
+  } catch (error) {
+      console.error('Error during password reset:', error);
+      return { success: false, error: 'An error occurred while resetting the password.' };
+  }
+}

@@ -1,6 +1,8 @@
-
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm({formType, handleInputChange, formData, handleSubmit, responseMsg}){
+    const navigate = useNavigate();
+
 
     return (
         <>
@@ -36,6 +38,7 @@ export default function LoginForm({formType, handleInputChange, formData, handle
                     </p>
                     <button type="submit">{formType}</button>
                 </form>
+                <button onClick={() => navigate('/requestReset')}>Reset Password</button>
             </div>
         </>
     );

@@ -10,6 +10,9 @@ services:
       - redis
       - celery
       - celery-beat
+    command: >
+      gunicorn --bind 0.0.0.0:8000 --workers=3 
+      --access-logfile - --error-logfile - --log-level debug encouragement_proj.wsgi:application
 
   db:
     image: postgres:15
@@ -44,6 +47,7 @@ services:
     depends_on:
       - redis
       - db
+
 
 volumes:
   postgres_data:

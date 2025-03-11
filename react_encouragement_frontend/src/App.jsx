@@ -8,6 +8,9 @@ import Profile from './pages/profile';
 import tokenContext from './contexts/tokenContext';
 import Landing from './pages/landing';
 import Logout from './components/logout';
+import PasswordReset from './pages/Reset';
+import RequestReset from './pages/requestReset';
+
 
 import './styles/App.css';
 
@@ -77,6 +80,8 @@ function App() {
               <Route path="/login" element={<Login handleInputChange={handleInputChange} formData={formData} handleToken={handleToken} />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/reset/:uidb64/:token/" element={<PasswordReset />}/>
+              <Route path='/requestReset' element={<RequestReset />}/>
             </Routes>
           </tokenContext.Provider>
         </Router>     

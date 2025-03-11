@@ -15,9 +15,12 @@ export default function Profile() {
 
     useEffect(() => {
         const fetchUserData = async () => {
+            console.log("getting data!!!")
+            console.log(userToken)
             try {
                 const response = await getUserInfo(userToken)
                 setData(response) // Update state with fetched data
+                console.log(data)
             } catch (error) {
                 console.error("Error fetching user data:", error)
             }
@@ -50,7 +53,6 @@ export default function Profile() {
         console.log("Data before update:", data)
 
         const context = { 
-            // password: data.password,
             first_name: data.first_name,
             last_name: data.last_name,
             email: data.email,
@@ -96,16 +98,6 @@ export default function Profile() {
                     <>
                         <form onSubmit={handleUpdate}>
                             <button type="submit">Save</button>
-                            {/* <div className="form-group">
-                                <label htmlFor="password">Password</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    value={""} 
-                                    onChange={handleInputChange}
-                                />
-                            </div> */}
                             <div className="form-group">
                                 <label htmlFor="first_name">First Name: </label>
                                 <input
@@ -175,13 +167,6 @@ export default function Profile() {
                                     <option value="23">11:00 PM</option>
                                     <option value="0">12:00 PM</option>
                                 </select>
-                                {/* <input
-                                    type="text"
-                                    name="message_hour"
-                                    id="message_hour"
-                                    value={data.message_hour}
-                                    onChange={handleInputChange}
-                                /> */}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="timezone">timezone: </label>
