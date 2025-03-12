@@ -29,7 +29,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-FRONTEND_URL = '://localhost:8090'
+FRONTEND_URL = '://3.145.90.205:8090'
 
 if DEBUG == True:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #during development only

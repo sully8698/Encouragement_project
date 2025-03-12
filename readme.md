@@ -2,6 +2,8 @@ Problem: Peoples mental health has become an important aspect in our modern age.
 
 Simple solution: A free service that sends you text of encouragement to start your day off on the right foot.
 
+
+
 Steps to get the backend up on docker
  - from inside encouragement_proj
 1) run ./run_compose.sh
