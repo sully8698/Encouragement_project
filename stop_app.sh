@@ -1,5 +1,5 @@
 cd  ./encouragement_proj
-docker compose down
+docker-compose down
 
 cd ../react_encouragement_frontend
 docker stop encouragement-front

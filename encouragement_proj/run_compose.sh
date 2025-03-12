@@ -1,4 +1,6 @@
-docker compose up --build -d
+docker-compose build 
+
+docker-compose up -d
 
 sleep 8
 docker exec encouragement_proj-api-1 python /src/manage.py makemigrations
