@@ -2,7 +2,9 @@ Problem: Peoples mental health has become an important aspect in our modern age.
 
 Simple solution: A free service that sends you text of encouragement to start your day off on the right foot.
 
-Steps to get the backend up
-1) Start the docker software
-2) run ./run_compose.sh
-    - this will build the docker image, start the container, and fill a sentence database
+Steps to get it up and running localy
+1) in react_encouragement_frontend run these commsnds
+ - npm install
+ - npm run build
+2) in root directory, make sure docker desktop is running 
+ - ./run_app.sh
