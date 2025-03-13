@@ -1,3 +1,3 @@
 cd ./react_encouragement_frontend
-docker stop
+docker stop encouragement-front
 docker rm encouragement-front

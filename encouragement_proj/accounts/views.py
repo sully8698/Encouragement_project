@@ -13,12 +13,9 @@ class GetUserView(RetrieveAPIView):
     serializer_class = SignupSerializer
 
     def get(self, request, *args, **kwargs):
-        try:
             instance = self.request.user.customer
             serializer = self.get_serializer(instance)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SignupView(CreateAPIView):
