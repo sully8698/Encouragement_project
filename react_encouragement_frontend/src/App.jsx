@@ -23,7 +23,7 @@ function App() {
                                     first_name: '',
                                     last_name: '',
                                     email: '',
-                                    phone_number: '+1',
+                                    phone_number: '',
                                     message_hour: '',
                                     timezone: ''
   });
@@ -31,28 +31,19 @@ function App() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === "phone_number"){
-      let updatedValue = value;
-
-      if (!updatedValue.startsWith('+1')) {
-        updatedValue = '+1' + updatedValue.replace(/^\+1?/, ''); // ensures only one "+1" added
+    setFormData((prevFormData) => {
+      if (name === "phone_number") {
+        let updatedValue = value;
+        // Ensure phone number starts with "+1" but not multiple times
+        if (!updatedValue.startsWith("+1")) {
+          updatedValue = `+1${updatedValue.replace(/^\+1/, "")}`;
+        }
+        return { ...prevFormData, [name]: updatedValue };
+      } else {
+        return { ...prevFormData, [name]: value };
       }
-
-      setFormData({
-        ...formData,
-        [name]: updatedValue,
-      });
-
-    }else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
-
+    });
   };
-
   const handleToken = (token) => {
     setFormData({ username: '', password: '' })
     setUserToken(token)
