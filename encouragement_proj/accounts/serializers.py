@@ -3,6 +3,10 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from customer_app.models import Customer
 import pytz
+from rest_framework.response import Response
+
+import logging
+logger = logging.getLogger(__name__)
 
 # custom serializer due to the onetoone relationship
 # between Customer model and django user model
@@ -37,7 +41,7 @@ class SignupSerializer(serializers.Serializer):
 
         return value
 
-    def create(self, validated_data):
+    def create(self, validated_data, *args, **kwargs):
         # User Object
         user_data = {
             'username': validated_data['username'],
@@ -45,6 +49,7 @@ class SignupSerializer(serializers.Serializer):
             'email': validated_data.get('email')
         }
         user = User.objects.create_user(**user_data) # create_user gives proper password hashing
+        logger.info(f"User created: {user.username}")
 
         # get the timezone
         timezone = validated_data.get('timezone') or self.context.get('request').headers.get('Timezone')
@@ -60,14 +65,16 @@ class SignupSerializer(serializers.Serializer):
             'username': user,  # Link the User to the Customer
             'first_name': validated_data['first_name'],
             'last_name': validated_data['last_name'],
-            'email': validated_data['email'],
+            # 'email': validated_data['email'], Taken out due to User object handling email
             'phone_number': validated_data['phone_number'],
             'message_hour': validated_data['message_hour'],
             'timezone': timezone
         }
+        logger.info(f"Creating customer for user: {user.username} with data: {customer_data}")
+
         customer = Customer.objects.create(**customer_data)
 
-        return customer
+        return Response({"message": "User created successfully", "user": customer.username.username}, status=status.HTTP_201_CREATED)
     
     def delete(self, request, id):
         customer = self.get_customer(id)

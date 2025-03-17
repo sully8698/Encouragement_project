@@ -1,6 +1,11 @@
 from __future__ import absolute_import, unicode_literals
 import os
+import environ
 from celery import Celery
+
+env = environ.Env()
+
+environ.Env.read_env(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '.env'))
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'encouragement_proj.settings')

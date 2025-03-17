@@ -10,7 +10,7 @@ class Customer(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE, related_name="customer")
     first_name = models.CharField(max_length=100, validators=[validate_name])
     last_name = models.CharField(max_length=100, validators=[validate_name])
-    email = models.CharField(max_length=200, unique=True, default=None, validators=[EmailValidator()])
+    # email = models.CharField(max_length=200, unique=True, default=None, validators=[EmailValidator()]) taken out due to User object handling email
 
     # phone number will need custom validator per whatever messaging api format requirements needed 
     phone_number = models.CharField(max_length=30)

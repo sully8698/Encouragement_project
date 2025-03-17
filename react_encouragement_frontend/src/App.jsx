@@ -8,6 +8,9 @@ import Profile from './pages/profile';
 import tokenContext from './contexts/tokenContext';
 import Landing from './pages/landing';
 import Logout from './components/logout';
+import PasswordReset from './pages/Reset';
+import RequestReset from './pages/requestReset';
+
 
 import './styles/App.css';
 
@@ -25,25 +28,34 @@ function App() {
                                     email: '',
                                     phone_number: '',
                                     message_hour: '',
-                                    timezone: ''
+                                    timezone: 'America/Los_Angeles'
   });
   const [userToken, setUserToken] = useState(() => localStorage.getItem('Token') || '')
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => {
-      if (name === "phone_number") {
-        let updatedValue = value;
-        // Ensure phone number starts with "+1" but not multiple times
-        if (!updatedValue.startsWith("+1")) {
-          updatedValue = `+1${updatedValue.replace(/^\+1/, "")}`;
-        }
-        return { ...prevFormData, [name]: updatedValue };
-      } else {
-        return { ...prevFormData, [name]: value };
+
+    if (name === "phone_number"){
+      let updatedValue = value;
+
+      if (!updatedValue.startsWith('+1')) {
+        updatedValue = '+1' + updatedValue.replace(/^\+1?/, ''); // ensures only one "+1" added
       }
-    });
+
+      setFormData({
+        ...formData,
+        [name]: updatedValue,
+      });
+
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value ?? "",
+      }));
+    }
+
   };
+
   const handleToken = (token) => {
     setFormData({ username: '', password: '' })
     setUserToken(token)
@@ -68,6 +80,8 @@ function App() {
               <Route path="/login" element={<Login handleInputChange={handleInputChange} formData={formData} handleToken={handleToken} />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/reset/:uidb64/:token/" element={<PasswordReset />}/>
+              <Route path='/requestReset' element={<RequestReset />}/>
             </Routes>
           </tokenContext.Provider>
         </Router>     
