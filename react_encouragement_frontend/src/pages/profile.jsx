@@ -20,7 +20,7 @@ export default function Profile() {
             try {
                 const response = await getUserInfo(userToken)
                 setData(response) // Update state with fetched data
-                console.log(data)
+                console.log(response)
             } catch (error) {
                 console.error("Error fetching user data:", error)
             }

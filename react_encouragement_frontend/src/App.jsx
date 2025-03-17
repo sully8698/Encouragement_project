@@ -28,7 +28,7 @@ function App() {
                                     email: '',
                                     phone_number: '+1',
                                     message_hour: '',
-                                    timezone: ''
+                                    timezone: 'America/Los_Angeles'
   });
   const [userToken, setUserToken] = useState(() => localStorage.getItem('Token') || '')
 
@@ -47,11 +47,11 @@ function App() {
         [name]: updatedValue,
       });
 
-    }else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value ?? "",
+      }));
     }
 
   };
