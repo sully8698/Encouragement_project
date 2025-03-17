@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure-j=(sb3*5b+a13q1drfl+6q_ro0z39n2(9a!1=#62r5juv5*vqs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['3.17.187.145', 'localhost', '127.0.0.1']
 
-FRONTEND_URL = '://localhost:8090'
+FRONTEND_URL = '://3.17.187.145:8090'
 
 if DEBUG == True:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #during development only
@@ -76,10 +76,16 @@ MIDDLEWARE = [
     
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
 
-# CORS_ALLOWED_ORIGINS = []
+CORS_ALLOWED_ORIGINS = [
+    "http://3.17.187.145:8090",  # Your frontend
+    # "http://localhost:3000",  # If testing locally
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://3.17.187.145:8090",
+]
 
 
 CORS_ALLOW_METHODS = [
@@ -234,3 +240,14 @@ LOGGING = {
         },
     },
 }
+
+LOGGING['handlers']['file'] = {
+    "level": "DEBUG",
+    "class": "logging.FileHandler",
+    "filename": "/var/log/django.log",
+    "formatter": "verbose",
+}
+
+LOGGING['root']['handlers'].append("file")
+LOGGING['loggers']['django']['handlers'].append("file")
+LOGGING['loggers']['gunicorn']['handlers'].append("file")
