@@ -32,9 +32,22 @@ class GetUserView(RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         try:
-            instance = self.request.user.customer
-            serializer = self.get_serializer(instance)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+
+            user_instance = self.request.user
+            customer_instance = user_instance.customer
+
+            response_data = {
+                'username': user_instance.username,
+                'email': user_instance.email,
+                'first_name': customer_instance.first_name,
+                'last_name': customer_instance.last_name,
+                'phone_number': customer_instance.phone_number,
+                'message_hour': customer_instance.message_hour,
+                'timezone': customer_instance.timezone
+            }
+
+            
+            return Response(response_data, status=status.HTTP_200_OK)
         except Customer.DoesNotExist:
             return Response({"error": "User has no customer data."}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
@@ -47,7 +60,7 @@ class SignupView(CreateAPIView):
 
     def perform_create(self, serializer):
         try:
-            customer = serializer.save()  # Save the customer
+            serializer.save()  # Save the customer
             
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -75,35 +88,51 @@ class UpdateUserView(UpdateAPIView):
     serializer_class = SignupSerializer
 
     def get_object(self):
-        return self.request.user.customer
+        return self.request.user
 
     def perform_update(self, serializer):
         instance = serializer.save()
+        user = instance.username
+        new_email = serializer.validated_data.get('email')
+
+        if new_email and new_email != user.email:
+            user.email = new_email
+            user.save()
+
         return instance
 
-    def put(self, request, *args, **kwargs): # works but requires all keys in request header because its a PUT request
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, context={'request': request})
+    # method not needed
+    # def put(self, request, *args, **kwargs): # works but requires all keys in request header because its a PUT request
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance, data=request.data, context={'request': request})
         
-        if serializer.is_valid():
-                updated_instance = serializer.save()
-                return Response({"message": f'User: {updated_instance.username} updated successfully'}, status=status.HTTP_200_OK)
+    #     if serializer.is_valid():
+    #             updated_instance = serializer.save()
+    #             return Response({"message": f'User: {updated_instance.username} updated successfully'}, status=status.HTTP_200_OK)
 
-        return Response({'error': 'Invalid data', 'details': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    #     return Response({'error': 'Invalid data', 'details': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
             
             
     
     def patch(self, request, *args, **kwargs):
         try:
-            instance = self.get_object()
-            serializer = self.get_serializer(instance, data=request.data, partial=True, context={'request': request})
+            user_instance = self.get_object()
+            customer_instance = user_instance.customer
 
-            if serializer.is_valid():
-                updated_instance = serializer.save()
-                return Response({"message": f'User: {updated_instance.username} updated successfully'}, status=status.HTTP_200_OK)
-            
-            return Response({"error": "Invalid data", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-        
+            customer_fields = ['first_name', 'last_name', 'phone_number', 'message_hour', 'timezone']
+
+            for field in customer_fields:
+                if field in request.data:
+                    setattr(customer_instance, field, request.data[field])
+
+            if 'email' in request.data:
+                user_instance.email = request.data['email']
+
+            customer_instance.save()
+            user_instance.save()
+
+            return Response({"message": f'User {user_instance.username} updated successfully'}, status=status.HTTP_200_OK)
+
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 

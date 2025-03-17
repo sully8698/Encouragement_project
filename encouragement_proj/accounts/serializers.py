@@ -65,7 +65,7 @@ class SignupSerializer(serializers.Serializer):
             'username': user,  # Link the User to the Customer
             'first_name': validated_data['first_name'],
             'last_name': validated_data['last_name'],
-            'email': validated_data['email'],
+            # 'email': validated_data['email'], Taken out due to User object handling email
             'phone_number': validated_data['phone_number'],
             'message_hour': validated_data['message_hour'],
             'timezone': timezone
