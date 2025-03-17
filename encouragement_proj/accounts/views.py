@@ -32,9 +32,24 @@ class GetUserView(RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         try:
-            instance = self.request.user.customer
-            serializer = self.get_serializer(instance)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+
+            user_instance = self.request.user
+            customer_instance = user_instance.customer
+
+            response_data = {
+                'username': user_instance.username,
+                'email': user_instance.email,
+                'first_name': customer_instance.first_name,
+                'last_name': customer_instance.last_name,
+                'phone_number': customer_instance.phone_number,
+                'message_hour': customer_instance.message_hour,
+                'timezone': customer_instance.timezone
+            }
+
+            
+            return Response(response_data, status=status.HTTP_200_OK)
+        except Customer.DoesNotExist:
+            return Response({"error": "User has no customer data."}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
