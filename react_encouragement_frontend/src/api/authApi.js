@@ -13,7 +13,7 @@ const payload = {
     body: JSON.stringify(context)
 }
 
-const response = await basicFetch("http://3.145.54.136:8000/encouragement/accounts/signup",payload)
+const response = await basicFetch("http://3.138.178.133:8000/encouragement/accounts/signup",payload)
 return response
 }
 
@@ -25,7 +25,7 @@ export async function login(context) {
       },
       body: JSON.stringify(context)
     }
-    const response = await basicFetch("http://3.145.54.136:8000/encouragement/accounts/get-token", payload)
+    const response = await basicFetch("http://3.138.178.133:8000/encouragement/accounts/get-token", payload)
     return response.token
   }
 
@@ -38,7 +38,7 @@ export async function getUserInfo(token) {
     },
   }
 
-  const response = await basicFetch("http://3.145.54.136:8000/encouragement/accounts/", payload)
+  const response = await basicFetch("http://3.138.178.133:8000/encouragement/accounts/", payload)
   console.log(response)
   return response 
 }
@@ -53,7 +53,7 @@ export async function updateUser(token, context) {
     body: JSON.stringify(context)
   }
 
-  const response = await basicFetch("http://3.145.54.136:8000/encouragement/accounts/update", payload)
+  const response = await basicFetch("http://3.138.178.133:8000/encouragement/accounts/update", payload)
   
   return response
 }
@@ -67,7 +67,7 @@ export async function deleteUser(token) {
     },
   }
 
-  const response = await basicFetch("http://3.145.54.136:8000/encouragement/accounts/delete", payload)
+  const response = await basicFetch("http://3.138.178.133:8000/encouragement/accounts/delete", payload)
 
   return response
   
@@ -85,7 +85,7 @@ export async function changePassword(token, context) { // context = {old_passwor
 
   try{
 
-    const response = await basicFetch("http://3.145.54.136:8000/encouragement/accounts/password_change", payload)
+    const response = await basicFetch("http://3.138.178.133:8000/encouragement/accounts/password_change", payload)
     
     if (!response.ok) {
       throw new Error("Password change failed, please try again.")
@@ -102,7 +102,7 @@ export async function changePassword(token, context) { // context = {old_passwor
 
 export async function resetPassword(email) {
   try {
-      const response = await fetch("http://3.145.54.136:8000/encouragement/accounts/password_reset", {
+      const response = await fetch("http://3.138.178.133:8000/encouragement/accounts/password_reset", {
           method: "POST",
           headers: {
               "Content-Type": "application/json"
@@ -135,7 +135,7 @@ export async function resetPasswordConfirm(uidb64, token, password, confirmPassw
   };
 
   try {
-      const response = await fetch(`http://3.145.54.136:8000/encouragement/accounts/reset/${uidb64}/${token}/`, payload);
+      const response = await fetch(`http://3.138.178.133:8000/encouragement/accounts/reset/${uidb64}/${token}/`, payload);
       console.log(response.status, response.headers.get('Location'));
 
       if (response.ok) {
