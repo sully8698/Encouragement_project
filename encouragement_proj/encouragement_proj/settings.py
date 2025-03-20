@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-j=(sb3*5b+a13q1drfl+6q_ro0z39n2(9a!1=#62r5juv5*vqs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['3.138.178.133', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['3.138.178.133', 'localhost', '127.0.0.1', 'api']
 
 FRONTEND_URL = '://3.138.178.133:8090'
 
@@ -79,12 +79,13 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
-    "http://3.17.187.145:8090",  # Your frontend
+    "http://api",
+    "http://3.138.178.133:8090",  # Your frontend
     # "http://localhost:3000",  # If testing locally
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://3.17.187.145:8090",
+    "http://3.138.178.133:8090",
 ]
 
 
